@@ -2,6 +2,8 @@ grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 
+
+
 grails.project.fork = [
     // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
     //  compile: [maxMemory: 256, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
@@ -50,7 +52,7 @@ grails.project.dependency.resolution = {
             export = false
         }
         // plugins needed at runtime but not for compilation
-        runtime":time-series:0.2.3"
+        runtime":time-series:0.2.4"
         runtime ":executor:0.3" 
         compile ":redis:1.5.5"
 
