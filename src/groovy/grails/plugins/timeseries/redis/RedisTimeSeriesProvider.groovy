@@ -205,13 +205,14 @@ class RedisTimeSeriesProvider extends AbstractTimeSeriesProvider {
 			responseHash.each {refId, counters->
 				def series = []
 				counters.each {counter, countsMap->
-					def output = [name:counter, values:[]]
+					def output = [name:counter, grandTotal: 0d, values:[]]
 					countsMap.each {st, countsResp->
 						def counts = countsResp.get()
 						counts.each {interval, count->
 							def lngInt = new Long(interval)
 							def dur = counterDurations[counter]
 							//println lngInt+'+'+dur
+							output.grandTotal += new Double(count)
 							output.values.add([start: new Date(new Long(st)  + (lngInt * dur)), count:new Double(count)])
 						}
 					}
@@ -271,12 +272,13 @@ class RedisTimeSeriesProvider extends AbstractTimeSeriesProvider {
 			responseHash.each {refId, counters->
 				def series = []
 				counters.each {counter, countsMap->
-					def output = [name:counter, values:[]]
+					def output = [name:counter, values:[], grandTotal:0d]
 					countsMap.each {st, countsResp->
 						def counts = countsResp.get()
 						counts.each {interval, count->
 							def lngInt = new Long(interval)
 							def dur = counterDurations[counter]
+							output.grandTotal += new Double(count)
 							output.values.add([timestamp: new Date(new Long(st)  + (lngInt * dur)), value:new Double(count)])
 						}
 					}
@@ -335,13 +337,14 @@ class RedisTimeSeriesProvider extends AbstractTimeSeriesProvider {
 			responseHash.each {refId, counters->
 				def series = []
 				counters.each {counter, countsMap->
-					def output = [name:counter, values:[]]
+					def output = [name:counter, grandTotal:0d, values:[]]
 					countsMap.each {st, countsResp->
 						def counts = countsResp.get()
 						counts.each {interval, count->
 							def lngInt = new Long(interval)
 							def dur = counterDurations[counter]
 							//println lngInt+'+'+dur
+							output.grandTotal += new Double(count)
 							output.values.add([start: new Date(new Long(st)  + (lngInt * dur)), count:new Double(count)])
 						}
 					}

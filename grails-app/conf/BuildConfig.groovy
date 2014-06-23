@@ -52,7 +52,7 @@ grails.project.dependency.resolution = {
             export = false
         }
         // plugins needed at runtime but not for compilation
-        runtime":time-series:0.2.4"
+        runtime":time-series:0.2.4.1"
         runtime ":executor:0.3" 
         compile ":redis:1.5.5"
 

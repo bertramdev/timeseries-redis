@@ -1,7 +1,7 @@
 class TimeSeriesRedisGrailsPlugin {
 //    def groupId = "org.grails.plugins"
 
-    def version = "0.1.1-SNAPSHOT"
+    def version = "0.1.4"
     def grailsVersion = "2.0 > *"
     def title = "Time Series Redis Plugin"
     def author = "Jeremy Leng"
