@@ -259,12 +259,14 @@ class RedisTimeSeriesProvider extends AbstractTimeSeriesProvider {
 				counterNames.each {k->
 					responseHash[referenceId][k] = [:]
 					def startAndInterval = getMetricStartAndInterval(k, start, config)
-					counterDurations[k] = ((long)startAndInterval.intervalSecs) * 1000l
-					def tmpStart = startAndInterval.start.time
-					while (tmpStart < end.time) {
-						id = 'm:'+referenceId+':'+k+':'+tmpStart
-						responseHash[referenceId][k][tmpStart] = pipeline.hgetAll(id)
-						tmpStart += ((long)startAndInterval.range) * 1000l
+					if (startAndInterval) {
+						counterDurations[k] = ((long)startAndInterval.intervalSecs) * 1000l
+						def tmpStart = startAndInterval.start.time
+						while (tmpStart < end.time) {
+							id = 'm:'+referenceId+':'+k+':'+tmpStart
+							responseHash[referenceId][k][tmpStart] = pipeline.hgetAll(id)
+							tmpStart += ((long)startAndInterval.range) * 1000l
+						}
 					}
 				}
 			}
@@ -324,12 +326,14 @@ class RedisTimeSeriesProvider extends AbstractTimeSeriesProvider {
 				counterNames.each {k->
 					responseHash[referenceId][k] = [:]
 					def startAndInterval = getCounterAggregateStartsAndIntervals(k, start, config).find {it.resolution == resolution}
-					counterDurations[k] = ((long)startAndInterval.intervalSecs) * 1000l
-					def tmpStart = startAndInterval.start.time
-					while (tmpStart < end.time) {
-						id = 'c:'+referenceId+':'+k+':'+resolution+':'+tmpStart
-						responseHash[referenceId][k][tmpStart] = pipeline.hgetAll(id)
-						tmpStart += ((long)startAndInterval.range) * 1000l
+					if (startAndInterval) {
+						counterDurations[k] = ((long)startAndInterval.intervalSecs) * 1000l
+						def tmpStart = startAndInterval.start.time
+						while (tmpStart < end.time) {
+							id = 'ca:'+referenceId+':'+k+':'+resolution+':'+tmpStart
+							responseHash[referenceId][k][tmpStart] = pipeline.hgetAll(id)
+							tmpStart += ((long)startAndInterval.range) * 1000l
+						}
 					}
 				}
 			}
